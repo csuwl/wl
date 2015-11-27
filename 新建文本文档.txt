@@ -1,0 +1,98 @@
+(defmacro juzhen (lst &optional c)
+         `(make-array '(,(car lst) ,(cdr lst)) :initial-element ,c))
+
+
+(defun jz-s(jz)
+	   (let ((h (array-dimension jz 0)) (n (array-dimension jz 1)))
+	     (dotimes (x h)
+	       (dotimes (f n)
+		 (format t "~a " (aref jz x f)))
+	       (format t "~%"))'ok))
+                
+
+(setf jz1(juzhen 3 4 5.0)
+	       jz2(juzhen 3 4 6.0)
+	       jz (juzhen 3 4 0.0))
+
+
+
+(defun jz+ (jz1 jz2)
+	   (let* ((h (array-dimension jz1 0))(n (array-dimension jz1 1))(jz (make-array (list h n))))
+	     (dotimes (x h)
+	       (dotimes (f n)
+		 (setf (aref jz x f)(+ (aref jz1 x f)(aref jz2 x f)))))(jz-s jz)))
+
+
+(defun jz* (jz1 jz2)
+	   (cond
+	     ((numberp jz1)
+	      (let((h (array-dimension jz2 0))(n (array-dimension jz2 1)))
+		(dotimes (x h)
+		  (dotimes (f n)
+		    (setf (aref jz2 x f)(* jz1 (aref jz2 x f)))))jz2))
+	     ((numberp jz2)
+	      (let ((h (array-dimension jz1 0))(n (array-dimension jz1 1)))
+		(dotimes (x h)
+		  (dotimes (f n)
+		    (setf (aref jz1 x f)(* jz2 (aref jz1 x f)))))jz1))
+	     (t (let* ((h1 (array-dimension jz1 0))(n1 (array-dimension jz1 1))
+		      (h2 (array-dimension jz2 0))(n2 (array-dimension jz2 1))(jzjz (make-array `(,h1 ,n2) :initial-element 0 )))
+		 (if (= n1 h2) 
+                         (dotimes (hang h1)
+		           (dotimes (lie n2)(let((acc 0))
+			     (dotimes (gg n1)
+		             (setf acc (+ acc (* (aref jz1 hang gg)(aref jz2 gg lie)))))
+			     (setf (aref jzjz hang lie) acc)))))))))
+
+
+
+(defun jz- (jz1 jz2)
+	   (let* ((h (array-dimension jz1 0))(n (array-dimension jz1 1))(jz (make-array (list h n))))
+	     (dotimes (x h)
+	       (dotimes (f n)
+		 (setf (aref jz x f)(- (aref jz1 x f)(aref jz2 x f)))))jz))
+
+
+(defun jz/ (jz1 jz2)
+	   (cond
+	     ((numberp jz2)
+	      (let ((h (array-dimension jz1 0))(n (array-dimension jz1 1)))
+		(dotimes (x h)
+		  (dotimes (f n)
+		    (setf (aref jz1 x f)(/ (aref jz1 x f) jz2))))jz1))
+	     (t (let* ((h (array-dimension jz1 0))(n (array-dimension jz1 1))
+		      (jzjz (make-array `(,h ,n))))
+		  (dotimes (x h)
+		    (dotimes (f n)
+		      (setf (aref jzjz x f)(/ (aref jz1 x f)(aref jz2 x f)))))jzjz))))
+
+
+(defun jzt (jz)
+	   (let* ((h (array-dimension jz 0)) (n (array-dimension jz 1))(jzjz (make-array `(,n ,h))))
+	     (dotimes (x h)
+	       (dotimes (f n)
+		 (setf (aref jzjz f x)(aref jz x f))))jzjz))
+
+
+ (defun j-z (lst)
+	   (let*((h (length lst))(n (length (car lst)))(jzjz (make-array `(,h ,n))))
+		    (dotimes (hang h)
+		      (dotimes (lie n)
+			(setf (aref jzjz hang lie) (nth lie (nth hang lst)))))
+		    jzjz))
+
+
+
+
+
+  (defun jz-d(jz h n)
+	   (let*((a (array-dimension jz 0))(b (array-dimension jz 1))(jzjz(make-array `(a ,b) :adjustable t)))
+	     (do((aa 0 (+ 1 aa))(a-a 0 (+ 1 a-a)))
+		((> aa (- a 1)))
+		(do((bb 0 (+ 1 bb))(b-b 0 (+ 1 b-b)))
+		   ((> bb (- b 1)))
+		  (if (= aa h)
+		      (setf aa (+ 1 aa))
+		      (if (= bb n)
+			  (setf bb (+ 1 bb))
+		      (setf (aref jzjz a-a b-b)(aref jz aa bb))))))jzjz))
