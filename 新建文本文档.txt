@@ -1,5 +1,19 @@
-(defmacro juzhen (lst &optional c)
-         `(make-array '(,(car lst) ,(cdr lst)) :initial-element ,c))
+
+
+
+
+(defun jz (h n &optional c)
+	   (make-array `(,h ,n) :initial-element c))
+
+
+
+
+(defun j-z (lst)
+	   (let*((h (length lst))(n (length (car lst)))(jzjz (make-array `(,h ,n))))
+		    (dotimes (hang h)
+		      (dotimes (lie n)
+			(setf (aref jzjz hang lie) (nth lie (nth hang lst)))))
+		    jzjz))
 
 
 (defun jz-s(jz)
@@ -74,25 +88,26 @@
 		 (setf (aref jzjz f x)(aref jz x f))))jzjz))
 
 
- (defun j-z (lst)
-	   (let*((h (length lst))(n (length (car lst)))(jzjz (make-array `(,h ,n))))
-		    (dotimes (hang h)
-		      (dotimes (lie n)
-			(setf (aref jzjz hang lie) (nth lie (nth hang lst)))))
-		    jzjz))
+ 
 
 
 
-
-
-  (defun jz-d(jz h n)
-	   (let*((a (array-dimension jz 0))(b (array-dimension jz 1))(jzjz(make-array `(a ,b) :adjustable t)))
+(defun yzs(jz h n)
+	   (let*((a (array-dimension jz 0))(b (array-dimension jz 1)))(if(= a b 1)(return-from yzs (aref jz 0 0))(let
+((jzjz(make-array `(,(- a 1) ,(- b 1)) :adjustable t)))
 	     (do((aa 0 (+ 1 aa))(a-a 0 (+ 1 a-a)))
-		((> aa (- a 1)))
+		((> aa (- a 1)))(progn (if (= aa h)(setf aa (+ 1 aa)))
 		(do((bb 0 (+ 1 bb))(b-b 0 (+ 1 b-b)))
-		   ((> bb (- b 1)))
-		  (if (= aa h)
-		      (setf aa (+ 1 aa))
+		   ((> bb (- b 1)))(progn
 		      (if (= bb n)
-			  (setf bb (+ 1 bb))
-		      (setf (aref jzjz a-a b-b)(aref jz aa bb))))))jzjz))
+			  (setf bb (+ 1 bb)))
+		      (setf (aref jzjz a-a b-b)(aref jz aa bb))))))jzjz))))
+
+
+
+
+
+ (defun hls (jz)(if (numberp jz) jz
+	   (let((b(array-dimension jz 1))(zhi 0)(z 0))(dotimes(x b)
+	     (setf z (* (expt -1 (+ 2 x)) (aref jz 0 x) (hls(yzs jz 0 x)))
+		   zhi (+ z zhi)))zhi)))
