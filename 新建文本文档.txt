@@ -1,7 +1,4 @@
 
-
-
-
 (defun jz (h n &optional c)
 	   (make-array `(,h ,n) :initial-element c))
 
